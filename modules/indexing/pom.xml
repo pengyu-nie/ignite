@@ -126,6 +126,12 @@
             <version>${guava.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.trigit</groupId>
+            <artifactId>org.trigit.core</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -155,6 +161,20 @@
                         <Fragment-Host>org.apache.ignite.ignite-core</Fragment-Host>
                     </instructions>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.trigit</groupId>
+                <artifactId>trigit-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>trigit</id>
+                        <goals>
+                            <goal>evaluate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
