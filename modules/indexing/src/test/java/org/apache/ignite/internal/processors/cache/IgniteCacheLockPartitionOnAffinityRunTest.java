@@ -48,6 +48,8 @@ import org.apache.ignite.testframework.GridTestUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import org.trigit.TrigIt;
+
 /**
  * Test to validate https://issues.apache.org/jira/browse/IGNITE-2310
  */
@@ -237,13 +239,19 @@ public class IgniteCacheLockPartitionOnAffinityRunTest extends IgniteCacheLockPa
 
         // TODO this comparison should be switched back to assertEquals
         // TODO when https://issues.apache.org/jira/browse/IGNITE-7692 is fixed.
-        if (partCnt != sqlFieldCnt)
-            assertFalse("Partition is primary, but size check failed [expected=" + partCnt +
-                ", actual=" + sqlFieldCnt + ']', primaryPartition(ignite, orgId));
+        // TrigIt encoded:
+        if (TrigIt.isClosed("https://issues.apache.org/jira/browse/IGNITE-7692")) {
+            assertEquals(partCnt, sqlCnt);
+            assertEquals(partCnt, sqlFieldCnt);
+        } else {
+            if (partCnt != sqlFieldCnt)
+                assertFalse("Partition is primary, but size check failed [expected=" + partCnt +
+                            ", actual=" + sqlFieldCnt + ']', primaryPartition(ignite, orgId));
 
-        if (partCnt != sqlCnt)
-            assertFalse("Partition is primary, but size check failed [expected=" + partCnt +
-                ", actual=" + sqlCnt + ']', primaryPartition(ignite, orgId));
+            if (partCnt != sqlCnt)
+                assertFalse("Partition is primary, but size check failed [expected=" + partCnt +
+                            ", actual=" + sqlCnt + ']', primaryPartition(ignite, orgId));
+        }
 
         return partCnt;
     }
